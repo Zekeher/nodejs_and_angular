@@ -1,0 +1,9 @@
+npm install express --save // para hacer las apiREST con node.js
+npm install bcrypt-nodejs --save // encrypta codigo (se usaria mas para las password)
+npm install body-parser --save // parsea las peticiones del body a json
+npm install connect-multiparty --save // para subir archivos a la api
+npm install jwt-simple --save // esto es para autenticar los TOKEN
+npm install moment --save // guarda los Token del usuario logeado
+npm install mongoose --save // es para la conexion con la base de datos
+npm install mongoose-pagination --save // genera paginacion
+npm install nodemon --save-dev // para el desarrollo nos carga el servidor
