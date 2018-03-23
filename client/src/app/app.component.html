@@ -1,0 +1,126 @@
+<div *ngIf="!identity" class="container">
+    <div class="row">
+        <div class="col-xs-6">
+            <form #login="ngForm" (ngSubmit)="onSubmit('login')" class="col-md-10">
+                <h2>Iniciar Sesion</h2>
+                <div class="form-group">
+                    <label for="username">Usuario:</label>
+                    <input [(ngModel)]="user.username" class="form-control" #username="ngModel" name="username" type="text" id="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pass">Contraseña:</label>
+                    <input [(ngModel)]="user.password" class="form-control" #pass="ngModel" name="pass" type="password" id="pass" required>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Ingresar" [disabled]="login.invalid">
+
+            </form>
+        </div>
+        <div class="col-xs-6">
+            <form #register="ngForm" (ngSubmit)="onSubmit('create')" class="col-md-10">
+                <h2>Registrarse</h2>
+                <div class="form-group">
+                    <label for="fname-reg">Nombre:</label>
+                    <input [(ngModel)]="userReg.fname" class="form-control" #fnameReg="ngModel" name="fnameReg" type="text" id="fname-reg" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="lname-reg">Apellido:</label>
+                    <input [(ngModel)]="userReg.lname" class="form-control" #fnameReg="ngModel" name="lnameReg" type="text" id="lname-reg" required>
+                </div>
+                <div class="form-group">
+                    <label for="username-reg">Usuario:</label>
+                    <input [(ngModel)]="userReg.username" class="form-control" #usernameReg="ngModel" name="usernameReg" type="text" id="username-reg" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email-reg">E-Mail:</label>
+                    <input [(ngModel)]="userReg.email" class="form-control" #emailReg="ngModel" name="emailReg" type="email" id="email-reg" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pass-reg">Contraseña:</label>
+                    <input [(ngModel)]="userReg.password" ngModel class="form-control" #passReg="ngModel" name="passReg" type="password" id="pass-reg" required>
+                </div>
+                <div class="form-group">
+                    <label for="pass2-reg"> Verificar Contraseña:</label>
+                    <input [(ngModel)]="userReg.password2" class="form-control" #pass2Reg="ngModel" name="pass2Reg" type="password" id="pass2-reg" required>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Registrarse" [disabled]="register.invalid">
+
+            </form>
+        </div>
+    </div>
+</div>
+<div *ngIf="identity" class="container">
+    <div class="row">
+        <div class="col-md-3 data-user">
+            <input type="button" (click)="logout()" class="btn btn-xs btn-danger logout" value="X">
+            <div class="row userPhoto"><img id="avatarUser" src="{{url +'users/img/'+ identity.image }}" alt="foto de perfil user"></div>
+            <div class="row"><strong>Nombre:</strong> {{identity.fname}}</div>
+            <div class="row"><strong>Apellido:</strong> {{identity.lname}}</div>
+            <div class="row"><strong>E-Mail:</strong> {{identity.email}}</div>
+            <div class="row"><strong>Role:</strong> {{identity.role}}</div>
+            <div class="row"><strong>Subir Imagen:</strong>
+                <upload-form></upload-form>
+            </div>
+        </div>
+        <div *ngIf="identity.role === 'master' || identity.role === 'admin'" class="col-md-9 pad-left">
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let users of usersLists">
+                            <td>{{users.username}}</td>
+                            <td>{{users.fname}}</td>
+                            <td>{{users.lname}}</td>
+                            <td>{{users.email}}</td>
+                            <td>{{users.role}}</td>
+                            <td>
+                                <input type="button" class="btn btn-xs btn-success" (click)="updateUser(users._id)" value="Editar">
+                                <input *ngIf="((identity.role === 'master' && identity.username !== users.username) || identity.role === 'admin') && users.role === 'view'" type="button" (click)="adminUser(users._id)" class="btn btn-xs btn-info" value="Admin">
+                                <input *ngIf="(identity.role === 'admin' || identity.role === 'master') && users.role === 'admin'" type="button" (click)="viewUser(users._id)" class="btn btn-xs btn-warning" value="View">
+                                <input *ngIf="identity.role === 'master' && identity.username !== users.username" type="button" (click)="deleteUser(users._id)" class="btn btn-xs btn-danger" value="Eliminar">
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div *ngIf="(userEdit && userRead)" class="row">
+                <hr>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input class="form-control" id="username" type="text" [(ngModel)]="userRead.username" required></td>
+                            <td><input class="form-control" id="fname" type="text" [(ngModel)]="userRead.fname" required></td>
+                            <td><input class="form-control" id="lname" type="text" [(ngModel)]="userRead.lname" required></td>
+                            <td><input class="form-control" id="email" type="email" [(ngModel)]="userRead.email" required></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="btn-group btn-right">
+                    <button class="btn btn-sm btn-default" (click)="cancelEdit()">Cancelar</button>
+                    <button class="btn btn-sm btn-info" (click)="aceptEdit(userRead)">Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

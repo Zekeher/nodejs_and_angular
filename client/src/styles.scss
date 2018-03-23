@@ -1,0 +1,47 @@
+/* You can add global styles to this file, and also import other style files */
+
+.container {
+    width: 100%;
+    padding: 20px;
+    .pad-left {
+        padding-left: 30px;
+    }
+    .btn {
+        margin: 2px;
+    }
+    .btn-right {
+        float: right;
+    }
+    .userPhoto {
+        width: 150px;
+        height: 150px;
+        display: inline-block;
+        clip-path: circle(60px at center);
+    }
+    .data-user {
+        letter-spacing: .5px;
+        border: 2px solid black;
+        padding: 10px;
+        text-align: center;
+        border-radius: 15px 0px;
+        background-color: #505050;
+        color: white;
+        position: relative;
+        .logout {
+            position: absolute;
+            top: 5px;
+            right: 4px;
+        }
+        img {
+            margin-bottom: 5px;
+            width: 100%;
+        }
+        .row {
+            margin: 0;
+            text-align: left;
+            strong {
+                color: cornflowerblue;
+            }
+        }
+    }
+}
