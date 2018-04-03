@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
       this._userService.loginUser(this.user).subscribe(data => {
         this.identity = data;
         // aca seteamos una imagen por default si el usuario no tiene una imagen cargada
-        if (this.identity.image === 'undefined' || this.identity.image === undefined || this.identity.image === null || this.identity.image === 'null') {
+        if (this.identity.image === 'undefined' || this.identity.image === undefined || this.identity.image === null || this.identity.image === 'null' || this.identity.image === '' || this.identity.image === ' ') {
           this.identity.image = 'unknown.png';
         }
         // aca guardamos la sesion del usuario localmente

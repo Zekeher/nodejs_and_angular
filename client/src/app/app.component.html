@@ -86,7 +86,7 @@
                             <td>{{users.email}}</td>
                             <td>{{users.role}}</td>
                             <td>
-                                <input type="button" class="btn btn-xs btn-success" (click)="updateUser(users._id)" value="Editar">
+                                <input *ngIf="(identity.role === 'admin' || identity.role === 'master') && users.role !== 'master'" type="button" class="btn btn-xs btn-success" (click)="updateUser(users._id)" value="Editar">
                                 <input *ngIf="((identity.role === 'master' && identity.username !== users.username) || identity.role === 'admin') && users.role === 'view'" type="button" (click)="adminUser(users._id)" class="btn btn-xs btn-info" value="Admin">
                                 <input *ngIf="(identity.role === 'admin' || identity.role === 'master') && users.role === 'admin'" type="button" (click)="viewUser(users._id)" class="btn btn-xs btn-warning" value="View">
                                 <input *ngIf="identity.role === 'master' && identity.username !== users.username" type="button" (click)="deleteUser(users._id)" class="btn btn-xs btn-danger" value="Eliminar">
